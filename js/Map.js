@@ -1,4 +1,4 @@
-var mapKit = {
+var MapKit = {
     /**
      * builder map url
      *
@@ -7,7 +7,7 @@ var mapKit = {
      * @param {Object} options Configuration 
      * @returns {undefined} 
      */
-    loader: function (callback,options) {
+    loader: function (callback, options) {
         options = options || {};
         // 扩展配置
         var key = options.key || 'a1aba2049ce8ef3ed0dd419dd839b4bb',
@@ -46,4 +46,20 @@ var mapKit = {
         // 在图面添加定位控件，用来获取和展示用户主机所在的经纬度位置
         // map.addControl(new AMap.Geolocation());
     },
+
+    // 地理编码
+    geocoder: null,
+    getAddress: function (callback) {
+        if (!mapKit.geocoder)
+            MapKit.geocoder = new AMap.Geocoder({
+                city: "010", //城市设为北京，默认：“全国”
+                radius: 1000 //范围，默认：500
+            });
+        MapKit.geocoder.getAddress(lnglat, function (status, result) {
+            if (status === 'complete' && result.regeocode)
+                callback(result.regeocode.formattedAddress);
+            else
+                console.error('根据经纬度查询地址失败')
+        });
+    }
 }
