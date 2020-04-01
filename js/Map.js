@@ -51,7 +51,10 @@ var MapKit = {
     createGeocoder: function () {
         MapKit.geocoder = new AMap.Geocoder({
             city: "长沙", //城市设为北京，默认：“全国”
-            radius: 1000 //范围，默认：500
+            radius: 1000, //范围，默认：500
+            lnag: 'zh-CN',
+            batch: true,
+            extensions: 'all',
         });
     },
     // 地理编码
