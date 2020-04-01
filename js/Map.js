@@ -48,33 +48,34 @@ var MapKit = {
     },
     // 地理编码
     geocoder: null,
+    createGeocoder: function () {
+        MapKit.geocoder = new AMap.Geocoder({
+            city: "长沙", //城市设为北京，默认：“全国”
+            radius: 1000 //范围，默认：500
+        });
+    },
+    // 地理编码
+    getLocation: function (address, callback) {
+        if (!MapKit.geocoder)
+            MapKit.createGeocoder();
+        // 传入数组批量查询 传入字符串查单个
+        MapKit.geocoder.getLocation(address, function (status, result) {
+            if (status === 'complete' && result.geocodes.length)
+                callback(result.geocodes[0].location)
+            else
+                console.error('根据地址查询经纬度失败');
+        });
+    },
+    // 逆向地理编码
     getAddress: function (lnglat, callback) {
-        if (!mapKit.geocoder)
-            MapKit.geocoder = new AMap.Geocoder({
-                city: "010", //城市设为北京，默认：“全国”
-                radius: 1000 //范围，默认：500
-            });
+        if (!MapKit.geocoder)
+            MapKit.createGeocoder();
         // 传入[[],[]]批量查或者 传入[]查询单个
         MapKit.geocoder.getAddress(lnglat, function (status, result) {
             if (status === 'complete' && result.regeocode)
                 callback(result.regeocode.formattedAddress);
             else
                 console.error('根据经纬度查询地址失败');
-        });
-    },
-    // 
-    getLocation: function (address, callback) {
-        if (!mapKit.geocoder)
-            MapKit.geocoder = new AMap.Geocoder({
-                city: "010", //城市设为北京，默认：“全国”
-                radius: 1000 //范围，默认：500
-            });
-        // 传入数组批量查询 传入字符串查单个
-        MapKit.geocoder.getLocation(address, function (status, result) {
-            if (status === 'complete' && result.geocodes.length)
-                callback(result.geocodes[0].location)
-            else
-                console.error('根据地址查询位置失败');
         });
     },
 }
