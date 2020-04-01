@@ -29,13 +29,16 @@
     <script src="./js/Map.js"></script>
     <script>
         MapKit.loader(function () {
-            var map = new AMap.Map('container', {
+            var map = new $AMap.Map('container', {
 
             });
             MapKit.addBasic(map);
         }, { plugin:['AMap.Geocoder'] });
+
+        
         window.onload = function () {
             MapKit.getLocation('长沙火车站', function (location) {
+                debugger
             });
         }
 
