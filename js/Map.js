@@ -46,20 +46,35 @@ var MapKit = {
         // 在图面添加定位控件，用来获取和展示用户主机所在的经纬度位置
         // map.addControl(new AMap.Geolocation());
     },
-
     // 地理编码
     geocoder: null,
-    getAddress: function (callback) {
+    getAddress: function (lnglat, callback) {
         if (!mapKit.geocoder)
             MapKit.geocoder = new AMap.Geocoder({
                 city: "010", //城市设为北京，默认：“全国”
                 radius: 1000 //范围，默认：500
             });
+        // 传入[[],[]]批量查或者 传入[]查询单个
         MapKit.geocoder.getAddress(lnglat, function (status, result) {
             if (status === 'complete' && result.regeocode)
                 callback(result.regeocode.formattedAddress);
             else
-                console.error('根据经纬度查询地址失败')
+                console.error('根据经纬度查询地址失败');
         });
-    }
+    },
+    // 
+    getLocation: function (address, callback) {
+        if (!mapKit.geocoder)
+            MapKit.geocoder = new AMap.Geocoder({
+                city: "010", //城市设为北京，默认：“全国”
+                radius: 1000 //范围，默认：500
+            });
+        // 传入数组批量查询 传入字符串查单个
+        MapKit.geocoder.getLocation(address, function (status, result) {
+            if (status === 'complete' && result.geocodes.length)
+                callback(result.geocodes[0].location)
+            else
+                console.error('根据地址查询位置失败');
+        });
+    },
 }
