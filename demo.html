@@ -28,12 +28,18 @@
     </div>
     <script src="./js/Map.js"></script>
     <script>
-        mapKit.loader(function () {
+        MapKit.loader(function () {
             var map = new AMap.Map('container', {
 
             });
-            mapKit.addBasic(map);
+            MapKit.addBasic(map);
         });
+        window.onload = function () {
+            MapKit.getLocation('长沙火车站', function (location) {
+
+            });
+        }
+
     </script>
 </body>
 

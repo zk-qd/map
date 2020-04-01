@@ -18,7 +18,7 @@ var MapKit = {
         window.onLoadMap = callback;
 
         // 基础插件配置
-        var basePlugin = 'AMap.ToolBar,AMap.Scale,AMap.OverView,AMap.MapType,AMap.Geolocation';
+        var basePlugin = 'AMap.ToolBar,AMap.Scale,AMap.OverView,AMap.MapType,AMap.Geolocation,AMap.Geocoder';
 
         var script = document.createElement('script'),
             src = 'http://webapi.amap.com/maps?v=1.4.14&key=' + key +
