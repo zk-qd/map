@@ -7,22 +7,16 @@ var MapKit = {
      * @param {Object} options Configuration 
      * @returns {undefined} 
      */
-    loader: function (callback, options) {
-        options = options || {};
-        // 扩展配置
-        var key = options.key || 'a1aba2049ce8ef3ed0dd419dd839b4bb',
-            // 数组
-            plugin = options.plugin,
-            // 回调函数
-            callback = callback || function () { };
+    loader: function (callback, { key = 'a1aba2049ce8ef3ed0dd419dd839b4bb', plugin = [] } = {}) {
+        // 回调函数
+        callback = callback || function () { };
         window.onLoadMap = callback;
-
+        // plugin = [AMap.Geocoder,]
         // 基础插件配置
-        var basePlugin = 'AMap.ToolBar,AMap.Scale,AMap.OverView,AMap.MapType,AMap.Geolocation,AMap.Geocoder';
-
+        var basePlugin = 'AMap.ToolBar,AMap.Scale,AMap.OverView,AMap.MapType,AMap.Geolocation,';
         var script = document.createElement('script'),
             src = 'http://webapi.amap.com/maps?v=1.4.14&key=' + key +
-                '&plugin=' + basePlugin + (plugin ? ',' + plugin.join(',').trim() : '') + '&callback=onLoadMap';
+                '&plugin=' + basePlugin + plugin.join(',').trim() + '&callback=onLoadMap';
         script.type = 'text/javascript';
         script.src = src;
         script.async = true;
