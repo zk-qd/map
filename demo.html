@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>重点区域运力监控</title>
+    <title></title>
+    <link rel="stylesheet" href="./less/map.css">
 </head>
 <style>
     html,
@@ -13,7 +14,6 @@
         height: 100%;
 
     }
-
     body {
         margin: 0;
         background-color: white;
@@ -28,19 +28,42 @@
     </div>
     <script src="./js/Map.js"></script>
     <script>
-        MapKit.loader(function () {
-            var map = new $AMap.Map('container', {
+        // MapKit.loader(function () {
+        //     var map = new $AMap.Map('container', {
 
+        //     });
+        //     MapKit.addBasic(map);
+        // }, { plugin:['AMap.Geocoder'] });
+
+
+        // window.onload = function () {
+        //     MapKit.getLocation('长沙火车站', function (location) {
+        //         debugger
+        //     });
+        // }
+
+        // KMap.loader({
+        //     container: 'container',
+        // }).then(kmap => {
+        //     var map = kmap.$map;
+        //     kmap.addBasicTools();
+        // }).catch(err => {
+        //     debugger
+        // });
+
+
+        async function autoManage() {
+            const kmap = await KMap.loader({
+                container: 'container',
+                plugin: 'all',
             });
-            MapKit.addBasic(map);
-        }, { plugin:['AMap.Geocoder'] });
-
-        
-        window.onload = function () {
-            MapKit.getLocation('长沙火车站', function (location) {
-                debugger
+            var map = kmap.$map;
+            kmap.addBasicTools();
+            kmap.getLocation('长沙火车站',function(res) {
+                console.log(res)
             });
         }
+        autoManage()
 
     </script>
 </body>

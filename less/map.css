@@ -1,0 +1,7 @@
+#container .amap-geolocation-con {
+  bottom: 50px !important;
+}
+#container .amap-logo,
+#container .amap-copyright {
+  display: none !important;
+}
