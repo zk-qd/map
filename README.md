@@ -1,39 +1,53 @@
-# 说明
+# Explanation
 
-动态引入地图脚本并添加地图工具 的`工具类`，不依赖其他js
+# Configuration
 
+### Parameter
 
+#### Init Build (static mode)
 
+| Name   |  type  | descriptor | default | required |
+| ------ | :----: | :--------: | ------: | :------: |
+| key    | string |  地图 key  |     ... |    no    |
+| plugin | array  |  插件数组  |      [] |    no    |
 
+#### Map (singleton mode)
 
+| Name      |  type  | descriptor  | default | required |
+| --------- | :----: | :---------: | ------: | :------: |
+| container | string | 地图容器 id |    null |   yes    |
+| center    | lnglat | 中心点数组  |    null |    no    |
 
-# 方法以及参数配置
+# Class
 
+### MapError
 
-### loader 
-> 初始化地图 
-1. callback 地图js执行完毕的回调方法 此时地图还未创建
+### Static
 
-2. plugin
-- key  地图key
-- plugin 地图插件数组  ['AMap.ToolBar','AMap.Scale']
-都已有默认值
+> 静态属性方法
 
-callback尽量不要省略
-其中plugin参数可省略
+### Instance
 
-### addBasic
-> 同步加载地图工具
-1. map  地图对象
+> 实例属性方法
 
+# Scheme
 
+### Mixin
 
-# 注意事项
-1. 该方法可以再onload事件之前调用
+> 混合类
 
-2. 由于脚本加载是异步，所以地图的使用要在回调中使用
+### MapScheme
 
+> 内部使用
 
-# 已解决问题
+#### API
 
-
+| Name                              |     Parameter      |    Return     |                        Description |
+| --------------------------------- | :----------------: | :-----------: | ---------------------------------: |
+| config3callback(config, callback) | {object,function}  |               |         verify config and callback |
+| pageData([,page])                 |   {index,count}    | {index,count} | 获取分页以及传入参数自定义获取分页 |
+| renderPage(data)                  | {index,rows,pages} |               |                           渲染分页 |
+| renderData(data)                  |      {datas}       |               |                           渲染表格 |
+| pHide()                           |                    |               |                           隐藏分页 |
+| tHide()                           |                    |               |                           隐藏表格 |
+| dead()                            |                    |               |                           销毁表格 |
