@@ -54,12 +54,13 @@
 
         async function autoManage() {
             const kmap = await KMap.loader({
-                container: 'container',
+                // container: 'container',
                 plugin: 'all',
             });
-            var map = kmap.$map;
-            kmap.addBasicTools();
-            kmap.getLocation('长沙火车站',function(res) {
+            // var map = kmap.$map;
+            // kmap.addBasicTools();
+            KMap.getLocation('长沙火车站',function(res) {
+                debugger
                 console.log(res)
             });
         }

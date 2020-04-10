@@ -18,7 +18,6 @@ void function (window) {
                     && !(key === 'name' && typeof source === 'function')
                     && !(key === 'length' && typeof source === 'function')
                 ) {
-                    console.log(source, key)
                     let desc = Object.getOwnPropertyDescriptor(source, key);
                     Object.defineProperty(target, key, desc);
                 }
@@ -38,35 +37,15 @@ void function (window) {
             }
         }
     }
+    const geocoder = Symbol('geocoder');
     // 无地图也能使用
     class Static {
-
-    }
-    // 地图调用的方法
-    const geocoder = Symbol('geocoder');
-    class Instance {
         constructor() {
             if (new.target === Map) throw TypeError('本类不能实例化');
         }
         // 地理编码
-        [geocoder] = null;
-        // 添加基础工具
-        addBasicTools() {
-            // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
-            this.$map.addControl(new KMap.AMap.ToolBar());
-
-            // 在图面添加比例尺控件，展示地图在当前层级和纬度下的比例尺
-            this.$map.addControl(new KMap.AMap.Scale());
-
-            // 在图面添加鹰眼控件，在地图右下角显示地图的缩略图
-            this.$map.addControl(new KMap.AMap.OverView({ isOpen: true }));
-
-            // 在图面添加类别切换控件，实现默认图层与卫星图、实施交通图层之间切换的控制
-            this.$map.addControl(new KMap.AMap.MapType());
-            // 在图面添加定位控件，用来获取和展示用户主机所在的经纬度位置
-            this.$map.addControl(new KMap.AMap.Geolocation());
-        }
-        createGeocoder(config) {
+        static [geocoder] = null;
+        static createGeocoder(config) {
             this[geocoder] = new KMap.AMap.Geocoder({
                 city: "长沙", //城市设为北京，默认：“全国”
                 radius: 1000, //范围，默认：500
@@ -77,7 +56,7 @@ void function (window) {
             });
         }
         // 地理编码
-        getLocation(address, config, callback) {
+        static getLocation(address, config, callback) {
             const result = MapScheme.config3callback(config, callback);
             config = result.config;
             callback = result.callback
@@ -94,7 +73,7 @@ void function (window) {
             });
         }
         // 逆向地理编码
-        getAddress(lnglat, config, callback) {
+        static getAddress(lnglat, config, callback) {
             const result = MapScheme.config3callback(config, callback);
             config = result.config;
             callback = result.callback
@@ -111,6 +90,29 @@ void function (window) {
 
             });
         }
+    }
+    // 地图调用的方法
+    class Instance {
+        constructor() {
+            if (new.target === Map) throw TypeError('本类不能实例化');
+        }
+        // 添加基础工具
+        addBasicTools() {
+            // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
+            this.$map.addControl(new KMap.AMap.ToolBar());
+
+            // 在图面添加比例尺控件，展示地图在当前层级和纬度下的比例尺
+            this.$map.addControl(new KMap.AMap.Scale());
+
+            // 在图面添加鹰眼控件，在地图右下角显示地图的缩略图
+            this.$map.addControl(new KMap.AMap.OverView({ isOpen: true }));
+
+            // 在图面添加类别切换控件，实现默认图层与卫星图、实施交通图层之间切换的控制
+            this.$map.addControl(new KMap.AMap.MapType());
+            // 在图面添加定位控件，用来获取和展示用户主机所在的经纬度位置
+            this.$map.addControl(new KMap.AMap.Geolocation());
+        }
+
     }
 
     // 错误
